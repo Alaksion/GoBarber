@@ -1,15 +1,13 @@
-import express from 'express'
-import router from './routes/index'
-const app = express()
-const port = 3030
+import express from 'express';
+import router from './routes/index';
+import './database';
 
+const app = express();
+const port = 3030;
 
-app.use(express.json())
-app.use(router)
+app.use(express.json());
+app.use(router);
 
-
-
-app.listen(port,
-    ()=>{console.log(`Servidor rodando na porta ${port}`)
-})
-
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
+});
