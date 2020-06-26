@@ -8,7 +8,7 @@ export default class usersTable1593125731142 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
             isPrimary: true,
@@ -17,6 +17,10 @@ export default class usersTable1593125731142 implements MigrationInterface {
             name: 'username',
             type: 'varchar',
             isNullable: false,
+          },
+          {
+            name: 'password',
+            type: 'varchar',
           },
           {
             name: 'email',

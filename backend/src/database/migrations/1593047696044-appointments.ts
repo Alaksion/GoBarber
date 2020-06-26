@@ -8,13 +8,13 @@ export default class appointments1593047696044 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'provider',
+            name: 'providerId',
             type: 'varchar',
             isNullable: false,
           },
@@ -22,6 +22,16 @@ export default class appointments1593047696044 implements MigrationInterface {
             name: 'date',
             type: 'timestamp with time zone',
             isNullable: false,
+          },
+          {
+            name: 'createdAt',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'updatedAt',
+            type: 'timestamp',
+            default: 'now()',
           },
         ],
       }),
