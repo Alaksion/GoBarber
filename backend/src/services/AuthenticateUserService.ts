@@ -3,6 +3,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import UserRepository from '../repositories/UsersRepository';
 import User from '../models/Users';
+import authConfig from '../config/auth';
 
 interface Request {
   email: string;
@@ -30,9 +31,9 @@ class AuthenticateUserService {
       throw Error('Invalid credentials');
     }
 
-    const token = sign({}, '123bidaiuhadw8912i3hkn093d', {
+    const token = sign({}, authConfig.secret, {
       subject: findUser.id,
-      expiresIn: '1d',
+      expiresIn: authConfig.expiresAt,
     });
 
     return { user: findUser, token };
