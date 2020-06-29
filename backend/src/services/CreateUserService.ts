@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '../models/Users';
 import UserRepository from '../repositories/UsersRepository';
+import AppError from '../errors/AppError';
 
 interface Request {
   username: string;
@@ -15,7 +16,7 @@ class CreateUserService {
     const validateMail = await userRepository.find({ where: { email } });
 
     if (validateMail.length > 0) {
-      throw Error('Email already in use');
+      throw new AppError('Email already in use', 400);
     }
     const encriptedpassword = await hash(password, 7);
 

@@ -25,6 +25,9 @@ class Users {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column()
+  avatar: string;
 }
 
 export default Users;

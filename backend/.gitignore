@@ -1,2 +1,7 @@
 node_modules
 notes
+temp/
+temp/
+
+tmp/*
+!tmp/.gitkeep

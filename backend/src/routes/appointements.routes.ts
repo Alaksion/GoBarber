@@ -8,18 +8,14 @@ import Authenticate from '../middlewares/Authenticate';
 const AppointmentRouter = Router();
 
 AppointmentRouter.post('/', Authenticate, async (req, res) => {
-  try {
-    const { providerId, date } = req.body;
-    const parsedDate = parseISO(date);
-    const CreateAppointment = new CreateAppointmentService();
-    const appointment = await CreateAppointment.execute({
-      providerId,
-      date: parsedDate,
-    });
-    return res.json(appointment);
-  } catch (err) {
-    return res.status(400).json({ error: err.message });
-  }
+  const { providerId, date } = req.body;
+  const parsedDate = parseISO(date);
+  const CreateAppointment = new CreateAppointmentService();
+  const appointment = await CreateAppointment.execute({
+    providerId,
+    date: parsedDate,
+  });
+  return res.json(appointment);
 });
 
 AppointmentRouter.get('/', Authenticate, async (req, res) => {

@@ -1,6 +1,7 @@
 import { Request, NextFunction, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import AuthConfig from '../config/auth';
+import AppError from '../errors/AppError';
 
 interface TokenPayload {
   iat: number;
@@ -16,7 +17,10 @@ export default function authenticate(
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    throw new Error('Authorization token required to access this resource');
+    throw new AppError(
+      'Authorization token required to access this resource',
+      401,
+    );
   }
 
   const [, token] = authHeader.split(' '); // informando ao JS que a primeira posição do array não vai ser utilizada
@@ -31,6 +35,6 @@ export default function authenticate(
 
     return next();
   } catch {
-    throw new Error('Invalid JWT Token');
+    throw new AppError('Invalid JWT Token', 401);
   }
 }

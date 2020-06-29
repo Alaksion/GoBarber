@@ -2,6 +2,7 @@ import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
 import Appointment from '../models/Appointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import AppError from '../errors/AppError';
 
 interface Request {
   date: Date;
@@ -23,7 +24,7 @@ class CreateAppointmentService {
 
       return appointment;
     }
-    throw Error('This appointment is already booked');
+    throw new AppError('This appointment is already booked', 400);
   }
 }
 export default CreateAppointmentService;
