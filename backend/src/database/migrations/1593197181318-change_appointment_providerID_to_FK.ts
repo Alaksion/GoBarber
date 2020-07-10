@@ -35,7 +35,7 @@ export default class changeAppointmentProviderIDToFK1593197181318
     await queryRunner.dropForeignKey('appointments', 'appointment_provider_fk');
     await queryRunner.dropColumn('appointments', 'providerId');
     await queryRunner.addColumn(
-      'providerId',
+      'appointments',
       new TableColumn({
         name: 'providerId',
         type: 'varchar',
