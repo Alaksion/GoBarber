@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import router from './routes/index';
@@ -8,7 +9,7 @@ import AppError from './errors/AppError';
 
 const app = express();
 const port = 3030;
-
+app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(multerconfig.directory));
 app.use(router);

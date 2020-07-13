@@ -1,6 +1,7 @@
 import React, {useCallback, InputHTMLAttributes, ComponentType, useEffect, useRef, useState} from 'react'
-import {Container} from './stytes'
+import {Container, Error} from './stytes'
 import {IconBaseProps} from 'react-icons'
+import {FiAlertTriangle} from 'react-icons/fi'
 import {useField} from '@unform/core'
 
 interface inputProps extends InputHTMLAttributes<HTMLInputElement>{
@@ -40,9 +41,8 @@ const CustomInput: React.FC<inputProps> = ({name, icon: Icon, ...rest}) => {
   }, [])
 
 
-
   return (
-  <Container isFilled={filled} isFocused={focus}>
+  <Container isError={!!error} isFilled={filled} isFocused={focus}>
     {Icon && <Icon></Icon>}
     <input
       ref={inputRef}
@@ -50,6 +50,11 @@ const CustomInput: React.FC<inputProps> = ({name, icon: Icon, ...rest}) => {
       onFocus={HandleInputFocus}
       onBlur={HandleInputBlur}
       />
+      {error &&
+        <Error title={error}>
+          <FiAlertTriangle size={20} color='#c53030'></FiAlertTriangle>
+        </Error>}
+
   </Container>
 
 )}
