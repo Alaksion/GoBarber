@@ -1,16 +1,17 @@
 import React from 'react';
+import {BrowserRouter} from 'react-router-dom'
 import GlobalStyle from './styles/global'
 import AppProvider from './hooks/index'
-import SignIn from './pages/login/index'
+import Routes from './routes/index'
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <AppProvider>
-        <SignIn></SignIn>
+        <Routes></Routes>
       </AppProvider>
       <GlobalStyle></GlobalStyle>
-    </>
+    </BrowserRouter>
   );
 }
 
