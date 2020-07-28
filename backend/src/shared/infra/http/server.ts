@@ -1,11 +1,12 @@
+import 'reflect-metadata';
 import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
-import router from './routes/index';
-import './database';
-import 'reflect-metadata';
-import multerconfig from './config/MulterConfig';
-import AppError from './errors/AppError';
+import AppError from '@shared/errors/AppError';
+import router from '@shared/infra/http/routes/index';
+import '@shared/infra/typeorm';
+import multerconfig from '@config/MulterConfig';
+import '@shared/container';
 
 const app = express();
 const port = 3030;
@@ -21,7 +22,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
       message: err.message,
     });
   }
-  console.error(err);
+
   return res.status(500).json({
     status: 'error',
     message: 'Internal server Error',

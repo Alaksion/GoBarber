@@ -19,14 +19,16 @@
     "pg": "^8.2.1",
     "reflect-metadata": "^0.1.13",
     "ts-node-dev": "^1.0.0-pre.49",
+    "tsyringe": "^4.3.0",
     "typeorm": "^0.2.25",
     "typescript": "^3.9.5",
     "uuidv4": "^6.1.0"
   },
   "scripts": {
-    "dev:server": "ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpileOnly   --ignore-watch node_modules src/shared/infra/http/server.ts",
     "build": "tsc",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "start": "ts-node src/shared/infra/http/server.ts",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.4.0",
@@ -39,6 +41,7 @@
     "eslint-plugin-import": "2.21.2",
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.0.5",
+    "tsconfig-paths": "^3.9.0",
     "yarn": "^1.22.4"
   }
 }

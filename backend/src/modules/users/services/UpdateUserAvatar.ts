@@ -1,22 +1,25 @@
 import path from 'path';
-import { getCustomRepository } from 'typeorm';
 import fs from 'fs';
-import UserRepository from '../repositories/UsersRepository';
-import User from '../models/Users';
-import MulterConfig from '../config/MulterConfig';
-import AppError from '../errors/AppError';
+import AppError from '@shared/errors/AppError';
+import User from '@modules/users/infra/typeorm/entities/Users';
+import IUserRepository from '@modules/users/repositories/IUsersRepository';
+import MulterConfig from '@config/MulterConfig';
+import { inject, injectable } from 'tsyringe';
 
 interface Request {
   userId: string;
   filename: string;
 }
 
+@injectable()
 class UpdateUserAvatarService {
+  constructor(
+    @inject('UserRepository')
+    private userRepository: IUserRepository,
+  ) {}
+
   public async execute({ userId, filename }: Request): Promise<User> {
-    const userRepository = getCustomRepository(UserRepository);
-    const user = await userRepository.findOne({
-      where: { id: userId },
-    });
+    const user = await this.userRepository.findById(userId);
 
     if (!user) {
       throw new AppError('Cannot change the avatar of an unknown user', 401);
@@ -36,7 +39,7 @@ class UpdateUserAvatarService {
     }
 
     user.avatar = filename;
-    await userRepository.save(user);
+    await this.userRepository.save(user);
     return user;
   }
 }
