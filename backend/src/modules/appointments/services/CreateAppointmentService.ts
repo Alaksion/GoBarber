@@ -20,8 +20,7 @@ class CreateAppointmentService {
     const validate = await this.appointmentRepository.findByDate(
       AppointmentDate,
     );
-
-    if (validate === null) {
+    if (!validate) {
       const appointment = await this.appointmentRepository.create({
         providerId,
         date: AppointmentDate,

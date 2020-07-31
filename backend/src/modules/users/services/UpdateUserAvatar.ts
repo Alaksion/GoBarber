@@ -1,9 +1,7 @@
-import path from 'path';
-import fs from 'fs';
 import AppError from '@shared/errors/AppError';
 import User from '@modules/users/infra/typeorm/entities/Users';
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
-import MulterConfig from '@config/MulterConfig';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import { inject, injectable } from 'tsyringe';
 
 interface Request {
@@ -16,29 +14,24 @@ class UpdateUserAvatarService {
   constructor(
     @inject('UserRepository')
     private userRepository: IUserRepository,
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider,
   ) {}
 
   public async execute({ userId, filename }: Request): Promise<User> {
     const user = await this.userRepository.findById(userId);
 
     if (!user) {
-      throw new AppError('Cannot change the avatar of an unknown user', 401);
+      throw new AppError('Only authenticated users can change the avatar', 401);
     }
 
     if (user.avatar) {
-      const userAvatarFilePath = path.resolve(
-        MulterConfig.directory,
-        user.avatar,
-      );
-
-      const FileExists = await fs.promises.stat(userAvatarFilePath);
-
-      if (FileExists) {
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      await this.storageProvider.deleteFile(user.avatar);
     }
 
-    user.avatar = filename;
+    const savedFile = await this.storageProvider.saveFile(filename);
+
+    user.avatar = savedFile;
     await this.userRepository.save(user);
     return user;
   }
