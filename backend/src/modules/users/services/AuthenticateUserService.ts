@@ -1,5 +1,5 @@
-import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider'
-import '@modules/users/providers/HashProvider/index'
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import '@modules/users/providers/HashProvider/index';
 import { sign } from 'jsonwebtoken';
 import User from '@modules/users/infra/typeorm/entities/Users';
 import authConfig from '@config/auth';
@@ -23,7 +23,7 @@ class AuthenticateUserService {
     @inject('UserRepository')
     private userRepository: IUserRepository,
     @inject('HashProvider')
-    private hashProvider : IHashProvider
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({ email, password }: Request): Promise<Response> {
@@ -33,7 +33,10 @@ class AuthenticateUserService {
       throw new AppError('Invalid credentials', 401);
     }
 
-    if ((await this.hashProvider.compareHash(password, findUser.password)) === false) {
+    if (
+      (await this.hashProvider.compareHash(password, findUser.password)) ===
+      false
+    ) {
       throw new AppError('Invalid credentials', 401);
     }
 

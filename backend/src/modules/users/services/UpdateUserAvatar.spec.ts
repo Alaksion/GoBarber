@@ -20,7 +20,7 @@ describe('User avatar', () => {
     );
 
     await AvatarSerice.execute({ userId: newUser.id, filename: 'fileteste' });
-    expect(newUser.avatar).toBe('fileteste');
+    await expect(newUser.avatar).toBe('fileteste');
   });
 
   it('Should not be able to update the avatar of an unexisting user', async () => {
@@ -31,7 +31,7 @@ describe('User avatar', () => {
       fakeStorage,
     );
 
-    expect(
+    await expect(
       AvatarSerice.execute({ userId: '123456', filename: 'fileteste' }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -63,7 +63,7 @@ describe('User avatar', () => {
       filename: 'newAvatar',
     });
 
-    expect(deleteFileFunction).toHaveBeenLastCalledWith('originalAvatar');
-    expect(newUser.avatar).toBe('newAvatar');
+    await expect(deleteFileFunction).toHaveBeenLastCalledWith('originalAvatar');
+    await expect(newUser.avatar).toBe('newAvatar');
   });
 });

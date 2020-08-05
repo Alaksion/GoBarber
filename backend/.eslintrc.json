@@ -32,7 +32,9 @@
     ],
     "no-useless-constructor" : "off",
     "import/no-unresolved" : "off",
-    "no-useless-return" : "off"
+    "no-useless-return" : "off",
+    "no-new": "off",
+    "no-console": "off"
   },
   "settings": {
     "import/resolver": {

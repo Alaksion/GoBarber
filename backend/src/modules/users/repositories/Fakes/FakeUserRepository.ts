@@ -1,19 +1,19 @@
 import { uuid } from 'uuidv4';
 import User from '../../infra/typeorm/entities/Users';
 import CreateUserDTO from '../../dtos/ICreateUserDto';
-import IAppointmentRepository from '../IUsersRepository';
+import IUsersRepository from '../IUsersRepository';
 
-class UserRepository implements IAppointmentRepository {
+class UserRepository implements IUsersRepository {
   private users: Array<User> = [];
 
   public async findByEmail(email: string): Promise<User | undefined> {
     const findUser = this.users.find(user => user.email === email);
-    return findUser || undefined;
+    return findUser;
   }
 
   public async findById(id: string): Promise<User | undefined> {
     const findUser = this.users.find(user => user.id === id);
-    return findUser || undefined;
+    return findUser;
   }
 
   public async create(data: CreateUserDTO): Promise<User> {
