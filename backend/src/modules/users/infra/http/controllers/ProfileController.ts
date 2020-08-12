@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import UpdateUserService from '../../services/UpdateUserService';
-import ShowProfileService from '../../services/ShowProfileService';
+import UpdateUserService from '@modules/users/services/UpdateUserService';
+import ShowProfileService from '@modules/users/services/ShowProfileService';
 
 class UpdateProfileController {
   public async update(req: Request, res: Response): Promise<Response> {

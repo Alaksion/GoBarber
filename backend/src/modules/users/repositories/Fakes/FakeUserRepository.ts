@@ -1,4 +1,5 @@
 import { uuid } from 'uuidv4';
+import FindAllProviderDTO from '@modules/users/dtos/IFindProviderDTO';
 import User from '../../infra/typeorm/entities/Users';
 import CreateUserDTO from '../../dtos/ICreateUserDto';
 import IUsersRepository from '../IUsersRepository';
@@ -34,6 +35,18 @@ class UserRepository implements IUsersRepository {
     );
     this.users[findIndex] = user;
     return user;
+  }
+
+  public async findAllProviders(
+    data: FindAllProviderDTO,
+  ): Promise<Array<User> | undefined> {
+    let users = this.users;
+
+    if (data.exceptUserID) {
+      users = this.users.filter(user => user.id !== data.exceptUserID);
+    }
+
+    return users;
   }
 }
 

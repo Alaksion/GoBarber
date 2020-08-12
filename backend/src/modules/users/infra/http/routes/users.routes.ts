@@ -4,8 +4,8 @@ import multer from 'multer';
 import Authenticate from '@shared/infra/http/middlewares/Authenticate';
 import multerConfig from '@config/MulterConfig';
 
-import UserController from '@modules/users/infra/controllers/UserController';
-import UserAvatarController from '@modules/users/infra/controllers/UserAvatarController';
+import UserController from '@modules/users/infra/http/controllers/UserController';
+import UserAvatarController from '@modules/users/infra/http/controllers/UserAvatarController';
 
 const UserRouter = Router();
 const upload = multer(multerConfig);

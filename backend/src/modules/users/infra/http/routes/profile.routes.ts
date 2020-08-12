@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import Authenticate from '@shared/infra/http/middlewares/Authenticate';
 
-import ProfileController from '../../controllers/ProfileController';
+import ProfileController from '@modules/users/infra/http/controllers/ProfileController';
 
 const profileController = new ProfileController();
 
