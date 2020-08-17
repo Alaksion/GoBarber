@@ -7,6 +7,7 @@ import router from '@shared/infra/http/routes/index';
 import '@shared/infra/typeorm';
 import multerconfig from '@config/MulterConfig';
 import '@shared/container';
+import { errors } from 'celebrate';
 
 const app = express();
 const port = 3030;
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(multerconfig.directory));
 app.use(router);
+app.use(errors());
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
