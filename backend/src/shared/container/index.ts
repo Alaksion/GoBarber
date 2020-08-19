@@ -8,10 +8,10 @@ import UserRepository from '@modules/users/infra/typeorm/repositories/UsersRepos
 import ITokenRepository from '@modules/users/repositories/IUserTokenRepository';
 import UserTokenRepository from '@modules/users/infra/typeorm/repositories/UserTokenRepository';
 
-import './providers';
-
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import NotificationRepository from '@modules/notifications/infra/typeorm/repositories/NotificationRepository';
+
+import './providers/index'; // resolve os containers de storage, email, e template email
 
 container.registerSingleton<IAppointmentRepository>(
   'AppointmentRepository',

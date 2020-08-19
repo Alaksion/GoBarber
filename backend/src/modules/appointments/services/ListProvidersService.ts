@@ -18,7 +18,6 @@ class ListProviderService {
     const users = await this.userRepository.findAllProviders({
       exceptUserID: userId,
     });
-    console.log(users);
 
     if (!users) {
       throw new AppError('No providers found');

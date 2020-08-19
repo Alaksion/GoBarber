@@ -38,7 +38,7 @@ class ForgotPasswordService {
         file: path.resolve(__dirname, '..', 'views', 'forgot_password.hbs'),
         variables: {
           name: user.username,
-          link: `http://localhost:3000/resetpassword?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/resetpassword?token=${token}`,
         },
       },
     });
