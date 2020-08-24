@@ -37,8 +37,10 @@
     "no-console": "off",
     "prefer-destructuring": "off",
     "@typescript-eslint/ban-types" : "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "default-case": "off",
-    "consistent-return" : "off"
+    "consistent-return" : "off",
+    "new-cap": "off"
   },
   "settings": {
     "import/resolver": {

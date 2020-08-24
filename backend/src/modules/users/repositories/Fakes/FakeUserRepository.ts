@@ -39,7 +39,7 @@ class UserRepository implements IUsersRepository {
 
   public async findAllProviders(
     data: FindAllProviderDTO,
-  ): Promise<Array<User> | undefined> {
+  ): Promise<Array<User>> {
     let users = this.users;
 
     if (data.exceptUserID) {

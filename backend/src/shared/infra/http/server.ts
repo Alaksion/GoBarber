@@ -10,9 +10,11 @@ import '@shared/infra/typeorm';
 import multerconfig from '@config/MulterConfig';
 import '@shared/container';
 import { errors } from 'celebrate';
+import RateLimiter from '@shared/infra/http/middlewares/RateLimit';
 
 const app = express();
 const port = 3030;
+app.use(RateLimiter);
 app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(multerconfig.directory));

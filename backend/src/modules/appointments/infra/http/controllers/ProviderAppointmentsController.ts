@@ -9,7 +9,7 @@ class ProviderAppointmentsController {
     const providerAppointmentsService = container.resolve(
       ListProviderAppointmentsService,
     );
-    const appointments = providerAppointmentsService.execute({
+    const appointments = await providerAppointmentsService.execute({
       month,
       day,
       year,

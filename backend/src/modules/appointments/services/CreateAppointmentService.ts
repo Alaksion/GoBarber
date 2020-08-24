@@ -4,6 +4,7 @@ import Appointment from '@modules/appointments/infra/typeorm/entities/Appointmen
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import { inject, injectable } from 'tsyringe';
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+import CacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 interface Request {
   date: Date;
@@ -17,6 +18,8 @@ class CreateAppointmentService {
     private appointmentRepository: IAppointmentRepository,
     @inject('notificationRepository')
     private notificationRepository: INotificationsRepository,
+    @inject('CacheProvider')
+    private cacheProvider: CacheProvider,
   ) {}
 
   public async execute({
@@ -42,6 +45,7 @@ class CreateAppointmentService {
     if (isBefore(AppointmentDate, Date.now())) {
       throw new AppError('Cannot create an appointment on a past date', 401);
     }
+    console.log(userId);
     if (!findAppointmentWithSameDate) {
       const appointment = await this.appointmentRepository.create({
         providerId,
@@ -55,6 +59,10 @@ class CreateAppointmentService {
         recipientId: providerId,
         content: `Novo agendamento marcado! Horário do atendimento: ${formatDate}`,
       });
+
+      await this.cacheProvider.invalidate(
+        `provider-appointments:${providerId}:${format(date, 'yyyy-M-d')}`,
+      );
 
       return appointment;
     }
