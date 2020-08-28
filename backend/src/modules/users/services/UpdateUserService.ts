@@ -54,6 +54,7 @@ class UpdateUserService {
     user.username = data.name;
     user.email = data.email;
     await this.userRepository.save(user);
+
     return user;
   }
 }

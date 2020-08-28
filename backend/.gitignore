@@ -2,7 +2,5 @@ node_modules
 notes
 temp/
 temp/
-.env
 tmp/*
 !tmp/.gitkeep
-ormconfig.json

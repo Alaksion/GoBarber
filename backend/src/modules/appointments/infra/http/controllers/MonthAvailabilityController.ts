@@ -7,12 +7,12 @@ class DayAvailabilityController {
     const monthAvailabilityService = container.resolve(
       MonthAvailabilityService,
     );
-    const { month, year } = req.body;
+    const { month, year } = req.query;
     const providerId = req.params.id;
     const monthAvailability = await monthAvailabilityService.execute({
       providerId,
-      month,
-      year,
+      month: Number(month),
+      year: Number(year),
     });
     return res.json(monthAvailability);
   }

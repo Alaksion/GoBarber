@@ -6,6 +6,7 @@ import { classToClass } from 'class-transformer';
 class UserAvatarController {
   public async update(req: Request, res: Response): Promise<Response> {
     const UpdateAvatarService = container.resolve(UpdateUserAvatarService);
+
     const UpdateAvatar = await UpdateAvatarService.execute({
       userId: req.user.id,
       filename: req.file.filename,
