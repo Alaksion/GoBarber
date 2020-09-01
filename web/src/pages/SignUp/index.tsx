@@ -1,5 +1,5 @@
 import React, {useCallback, useRef} from 'react';
-import {Link, useHistory} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {Container, Content, Background, AnimationContainer} from './styles'
 import logo from '../../assets/logo.svg'
 import {FiMail, FiLock, FiUser, FiArrowLeft} from 'react-icons/fi'
@@ -22,8 +22,6 @@ const SingUp: React.FC = ()=>{
 
   const formRef = useRef<FormHandles>(null)
   const {addToast} = useToast()
-  const history = useHistory()
-
   const HandleSubmit = useCallback( async (data:SignuPFormData) : Promise<void>=>{
     try{
       formRef.current?.setErrors({})
@@ -64,7 +62,7 @@ const SingUp: React.FC = ()=>{
 
     }
 
-  }, [addToast, history] )
+  }, [addToast] )
 
   return(
     <Container>
