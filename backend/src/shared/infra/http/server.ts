@@ -14,10 +14,10 @@ import RateLimiter from '@shared/infra/http/middlewares/RateLimit';
 
 const app = express();
 const port = 3030;
-app.use(RateLimiter);
 app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(multerconfig.directory));
+app.use(RateLimiter);
 app.use(router);
 app.use(errors());
 
