@@ -30,6 +30,7 @@ class Users {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Exclude()
   @Column()
   avatar: string;
 

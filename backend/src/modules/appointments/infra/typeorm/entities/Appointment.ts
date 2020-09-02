@@ -8,6 +8,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+import { Exclude } from 'class-transformer';
+
 import User from '@modules/users/infra/typeorm/entities/Users';
 
 @Entity('appointments')
@@ -18,6 +20,7 @@ class Appointment {
   @Column('uuid')
   providerId: string;
 
+  @Exclude()
   @Column('uuid')
   userId: string;
 

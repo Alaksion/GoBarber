@@ -2,7 +2,7 @@ User 1:
 {
 	"username": "Teste33",
 	"email": "teste33@teste.com.br",
-	"password": "123456"
+	"password": "1234567"
 }
 
 user2

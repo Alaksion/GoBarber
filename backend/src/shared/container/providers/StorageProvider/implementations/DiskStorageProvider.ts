@@ -8,13 +8,13 @@ class DiskStorageProvider implements IStorageProvider {
   public async saveFile(file: string): Promise<string> {
     await fs.promises.rename(
       path.resolve(uploadConfig.directory, file),
-      path.resolve(uploadConfig.directory, 'uploads', file),
+      path.resolve(uploadConfig.directory, file),
     );
     return file;
   }
 
   public async deleteFile(file: string): Promise<void> {
-    const filePath = path.resolve(uploadConfig.directory, 'uploads', file);
+    const filePath = path.resolve(uploadConfig.directory, file);
     try {
       fs.promises.stat(filePath);
       await fs.promises.unlink(filePath);
