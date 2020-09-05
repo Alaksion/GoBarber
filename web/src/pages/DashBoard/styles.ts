@@ -6,7 +6,8 @@ export const Container = styled.div`
 `;
 export const Header = styled.header`
   padding: 32px 0;
-  background: #28262e
+  background: #28262e;
+
 `;
 
 export const HeaderContent = styled.div`
@@ -47,9 +48,17 @@ export const Profile = styled.div`
     span{
       color: #f4ede8
     }
-    strong{
-      color: #ff9000
+    a{
+      text-decoration: none;
     }
+
+    strong{
+      color: #ff9000;
+      &:hover{
+        opacity: 0.8;
+      }
+    }
+
   }
 `
 export const Content = styled.div`
@@ -212,6 +221,10 @@ export const NextAppointment = styled.div`
 `
 export const Section = styled.section`
   margin-top: 48px;
+  p{
+    color: #999591
+
+  };
   strong{
     color: #999591;
     font-size: 20px;

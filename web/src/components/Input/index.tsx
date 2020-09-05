@@ -1,4 +1,4 @@
-import React, {useCallback, InputHTMLAttributes, ComponentType, useEffect, useRef, useState} from 'react'
+import React, {useCallback, InputHTMLAttributes, useEffect, useRef, useState} from 'react'
 import {Container, Error} from './stytes'
 import {IconBaseProps} from 'react-icons'
 import {FiAlertTriangle} from 'react-icons/fi'
@@ -7,10 +7,11 @@ import {useField} from '@unform/core'
 interface inputProps extends InputHTMLAttributes<HTMLInputElement>{
   name:string;
   icon: React.ComponentType<IconBaseProps>;
+  ContainerStyle?:object;
 }
 
 
-const CustomInput: React.FC<inputProps> = ({name, icon: Icon, ...rest}) => {
+const CustomInput: React.FC<inputProps> = ({ContainerStyle, name, icon: Icon, ...rest}) => {
 
   // A funcão useField do unform permite que nós capturemos as informações de um componente assim que ele é carregado, dessa forma
   // podemos interagir com o componente usando Unform na página do formulário.
@@ -42,7 +43,7 @@ const CustomInput: React.FC<inputProps> = ({name, icon: Icon, ...rest}) => {
 
 
   return (
-  <Container isError={!!error} isFilled={filled} isFocused={focus}>
+  <Container style={ContainerStyle} isError={!!error} isFilled={filled} isFocused={focus}>
     {Icon && <Icon></Icon>}
     <input
       ref={inputRef}
