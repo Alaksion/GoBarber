@@ -1,10 +1,18 @@
 import React, {createContext, useCallback, useState, useContext, useEffect} from 'react'
 import api from '../services/Api'
 import AsyncStorage from '@react-native-community/async-storage'
+import { StringLocale } from 'yup'
+
+interface User{
+  id: string;
+  username: string;
+  email: string;
+  avatar_url: string;
+}
 
 interface AuthState{
   token: string;
-  user: {}
+  user: User;
 }
 
 interface Credentials{
@@ -13,7 +21,7 @@ interface Credentials{
 }
 
 interface AuthContextData{
-  user: {};
+  user: User;
   signIn(credentials : Credentials) : Promise<void>;
   signOut() : void;
   loading: boolean;
@@ -34,6 +42,7 @@ const AuthProvider: React.FC = ({children}) => {
       const user = await AsyncStorage.getItem('@gobarber:user')
 
     if(token && user){
+      api.defaults.headers.authorization = `Bearer ${token}`
       setData({token, user: JSON.parse(user)})
     }      
   }
@@ -48,7 +57,9 @@ const AuthProvider: React.FC = ({children}) => {
     const {token, user} = response.data
     await AsyncStorage.setItem('@gobarber:token', token)
     await AsyncStorage.setItem('@gobarber:user', JSON.stringify(user))
+    api.defaults.headers.authorization = `Bearer ${token}`
     setData({token, user})
+
   }, [])
 
   const signOut = useCallback(async ()=> {

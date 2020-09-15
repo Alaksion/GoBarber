@@ -1,15 +1,52 @@
-import React from 'react'
-import {Text} from 'react-native'
-import {Container} from './styles'
-import Button from '../../Components/Button/index'
+import React, {useCallback, useEffect, useState} from 'react'
+import {Container, Header, HeaderTitle, UserName, ProfileButton, UserAvatar, ProvidersList} from './styles'
 import {useAuth} from '../../hooks/AuthContext'
+import { useNavigation } from '@react-navigation/native'
+import api from '../../services/Api'
 
+export interface Provider{
+  id: string;
+  username: string;
+  avatarUrl: string;
+}
 
 const DashBoard: React.FC = () =>{
-  const {signOut} = useAuth()
+  const {signOut, user} = useAuth()
+  const [providers, setProviders] = useState<Provider[]>([]);
+
+  const {navigate} = useNavigation()
+
+  const navigateToProfile = useCallback(()=>{
+    signOut()
+    //navigate("profile")
+
+  }, [])
+
+  useEffect(()=>{
+    api.get('/providers').then(response => setProviders(response.data));
+
+  }, [])
+
   return(
     <Container>
-      <Button onPress={signOut}> Log-Out</Button>
+      <Header>
+        <HeaderTitle>
+          Bem vindo, {"\n"}
+          <UserName>{user.username}</UserName>
+        </HeaderTitle>
+
+        <ProfileButton onPress={()=>(navigateToProfile)}>
+          <UserAvatar source={{uri: user.avatar_url}}></UserAvatar>
+        </ProfileButton>
+      </Header>
+      <ProvidersList 
+      data={providers}
+      renderItem={({item}) =>(
+        <UserName>{item.username}</UserName>
+      )}
+      >
+
+      </ProvidersList>
     </Container>
   )
 }
