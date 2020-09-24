@@ -3,6 +3,7 @@ import {Container, Header, HeaderTitle, UserName, ProfileButton, UserAvatar, Pro
 import {useAuth} from '../../hooks/AuthContext'
 import { useNavigation } from '@react-navigation/native'
 import api from '../../services/Api'
+import {Text} from 'react-native'
 
 export interface Provider{
   id: string;
@@ -31,7 +32,7 @@ const DashBoard: React.FC = () =>{
     <Container>
       <Header>
         <HeaderTitle>
-          Bem vindo, {"\n"}
+          <Text>Bem vindo</Text>
           <UserName>{user.username}</UserName>
         </HeaderTitle>
 
@@ -45,7 +46,6 @@ const DashBoard: React.FC = () =>{
         <UserName>{item.username}</UserName>
       )}
       >
-
       </ProvidersList>
     </Container>
   )

@@ -72,9 +72,8 @@ const SignIn : React.FC = () => {
               returnKeyType={"next"}
               onSubmitEditing={()=> {
                 passowrdInputRef.current?.focus()
-               }}>
-              </Input>
-
+               }}/>
+      
               <Input 
               name='password'
               icon='lock' 
@@ -82,10 +81,8 @@ const SignIn : React.FC = () => {
               secureTextEntry
               returnKeyType='send'
               ref={passowrdInputRef}
-              onSubmitEditing={() => formRef.current?.submitForm() }>
-
-              </Input>
-              
+              onSubmitEditing={() => formRef.current?.submitForm() }/>
+    
             </Form>
 
             <Button onPress={() => formRef.current?.submitForm()}>Entrar</Button>
@@ -104,8 +101,6 @@ const SignIn : React.FC = () => {
         </KeyboardAvoidingView>
       </ScrollView>
     </>
-
-    
   )
 }
 

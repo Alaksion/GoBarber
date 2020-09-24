@@ -83,11 +83,8 @@ const SignUp : React.FC = () => {
               icon='user' 
               placeholder='Nome'
               returnKeyType='next'
-              onSubmitEditing={()=> emailInputRef.current?.focus()}
-              >
-
-              </Input>
-
+              onSubmitEditing={()=> emailInputRef.current?.focus()}/>
+    
               <Input 
               name='email' 
               icon='mail' 
@@ -97,8 +94,8 @@ const SignUp : React.FC = () => {
               autoCorrect={false}
               autoCapitalize='none'
               returnKeyType='next'
-              onSubmitEditing={()=> passwordInputRef.current?.focus()}>
-              </Input>
+              onSubmitEditing={()=> passwordInputRef.current?.focus()}/>
+              
 
               <Input 
               name='password'
@@ -108,9 +105,7 @@ const SignUp : React.FC = () => {
               secureTextEntry
               returnKeyType='send'
               textContentType='newPassword'
-              onSubmitEditing={()=> formRef.current?.submitForm()}
-              >
-              </Input>
+              onSubmitEditing={()=> formRef.current?.submitForm()}/>
             </Form>
         
             <Button onPress={() => formRef.current?.submitForm() }>Cadastrar</Button>
