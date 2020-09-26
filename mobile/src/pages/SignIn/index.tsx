@@ -24,7 +24,6 @@ const SignIn : React.FC = () => {
   const formRef = useRef<FormHandles>(null)
   const passowrdInputRef = useRef<TextInput>(null)
   const {signIn, user} = useAuth()
-  console.log(user)
 
   const HandleSignIn = useCallback( async (data: FormData)=>{
     try{
@@ -37,9 +36,8 @@ const SignIn : React.FC = () => {
       await Schema.validate(data, {
         abortEarly: false,
       })
-
       await signIn({email: data.email, password: data.password})
-
+  
     }catch(err){
       const erros = ValidationErros(err)
       formRef.current?.setErrors(erros)

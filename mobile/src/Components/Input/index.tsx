@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, RefForwardingComponent, useImperativeHandle, forwardRef, useState, useCallback} from 'react'
 import {Container, TextInupt, Icon} from './styles'
-import {TextInputProps} from 'react-native'
+import {TextInputProps, View} from 'react-native'
 import {useField} from '@unform/core'
 
 
@@ -72,9 +72,8 @@ const Input: RefForwardingComponent<InputRef, InputProps> = ({name, icon, ...res
       keyboardAppearance='dark'
       onFocus={HandleInputFocus}
       onBlur={HandleInputBlur}
-      {...rest}></TextInupt>
+      {...rest}/>
     </Container>
-    
   )
 }
 

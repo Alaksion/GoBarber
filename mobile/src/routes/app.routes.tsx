@@ -4,6 +4,7 @@ import Dashboard from '../pages/DashBoard/index'
 import Profile from '../pages/Profile'
 import CreateAppointment from '../pages/CreateAppointment'
 import AppointmentCreated from '../pages/AppointmentCreated'
+import { Text, View } from 'react-native'
 
 
 const App = createStackNavigator()
@@ -16,7 +17,6 @@ const AppRoutes: React.FC = () => {
       <App.Screen name='createAppointment' component={CreateAppointment}></App.Screen>
       <App.Screen name='AppointmentCreated' component={AppointmentCreated}></App.Screen>
     </App.Navigator>
-
   )
 }
 

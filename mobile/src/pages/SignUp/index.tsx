@@ -64,8 +64,6 @@ const SignUp : React.FC = () => {
   }, [])
 
   return(
-
-
     <>
     <ScrollView
     contentContainerStyle={{flex: 1}} keyboardShouldPersistTaps='handled'>
@@ -120,8 +118,6 @@ const SignUp : React.FC = () => {
         </KeyboardAvoidingView>
       </ScrollView>
     </>
-
-    
   )
 }
 
