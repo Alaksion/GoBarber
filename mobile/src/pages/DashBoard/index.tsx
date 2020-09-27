@@ -34,7 +34,7 @@ const DashBoard: React.FC = () =>{
     })
 
   }, [])
-  console.log(user)
+
   return(
     <Container>
       <Header>
