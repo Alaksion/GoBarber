@@ -56,7 +56,6 @@ const AuthProvider: React.FC = ({children}) => {
   const signIn = useCallback(async ({email, password})=>{
     const response = await api.post('/session', {email, password})
     const {token, user} = response.data
-    console.log(token, user)
     await AsyncStorage.setItem('@gobarber:token', token)
     await AsyncStorage.setItem('@gobarber:user', JSON.stringify(user))
     api.defaults.headers.authorization = `Bearer ${token}`

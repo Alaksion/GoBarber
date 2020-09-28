@@ -10,7 +10,8 @@ const HomePage: React.FC = () => {
     <NavigationContainer>
       <StatusBar 
       backgroundColor={'#312e38'}
-      barStyle='light-content'>
+      barStyle='light-content'
+      translucent>
       </StatusBar>
 
       <AppProvider>
