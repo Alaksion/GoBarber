@@ -39,14 +39,17 @@ class CreateAppointmentService {
     }
 
     if (date.getHours() < 8 || date.getHours() > 17) {
+      console.log(date);
+      console.log(date.getHours());
       throw new AppError(
         'Cannot create an appointment before 8:00am or after 17:pm',
       );
     }
+
     if (isBefore(AppointmentDate, Date.now())) {
       throw new AppError('Cannot create an appointment on a past date', 401);
     }
-    console.log(userId);
+
     if (!findAppointmentWithSameDate) {
       const appointment = await this.appointmentRepository.create({
         providerId,
@@ -64,9 +67,9 @@ class CreateAppointmentService {
       await this.cacheProvider.invalidate(
         `provider-appointments:${providerId}:${format(date, 'yyyy-M-d')}`,
       );
-
       return appointment;
     }
+
     throw new AppError('This appointment is already booked', 400);
   }
 }
