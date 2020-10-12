@@ -19,8 +19,7 @@ const DashBoard: React.FC = () =>{
   const {navigate} = useNavigation()
 
   const navigateToProfile = useCallback(()=>{
-    signOut()
-    //navigate("profile")
+    navigate("Profile")
 
   }, [])
 
