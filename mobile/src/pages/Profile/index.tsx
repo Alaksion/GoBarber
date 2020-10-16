@@ -1,6 +1,6 @@
 import React, {useCallback, useRef} from 'react'
 import {Image, KeyboardAvoidingView, Platform, View, ScrollView, TextInput, Alert} from 'react-native'
-import {Container, Title, UserAvatarButton, UserAvatar} from './styles'
+import {Container, Title, UserAvatarButton, UserAvatar, BackButton} from './styles'
 import Input from '../../Components/Input/index'
 import Button from '../../Components/Button/index'
 import { useNavigation } from '@react-navigation/native'
@@ -10,16 +10,20 @@ import * as Yup from 'yup'
 import ValidationErrors from '../../utils/getValidationErrors'
 import api from '../../services/Api'
 import { useAuth } from '../../hooks/AuthContext'
+import Icon from 'react-native-vector-icons/Feather'
+import ImagePicker from 'react-native-image-picker'
 
 interface FormData{
   name: string;
   email: string;
   password: string;
+  oldPassword: string;
+  passwordConfirmation: string;
 }
 
 const Profile : React.FC = () => {
 
-  const {user} = useAuth()
+  const {user, updateUser} = useAuth()
   const navigation = useNavigation()
   const formRef = useRef<FormHandles>(null)
   const emailInputRef = useRef<TextInput>(null)
@@ -29,42 +33,97 @@ const Profile : React.FC = () => {
  
 
   const HandleSubmit = useCallback(async (data:FormData)=>{
+
     try{
       formRef.current?.setErrors({})
-      const Schema = Yup.object().shape({
-        name: Yup.string().required('Campo nome obrigatório'),
-        email: Yup.string().email('E-mail inválido').required('Campo E-mail obrigatório'),
-        password: Yup.string().min(6, 'Campo senha deve ter ao menos 6 caracteres')
+      const schema = Yup.object().shape({
+        name: Yup.string(),
+        email: Yup.string().email(),
+        oldPassword: Yup.string(),
+        password: Yup.string().when('oldPassword', {
+          is: val => !!val.length,
+          then: Yup.string().required("Campo obrigatório")
+        }),
+        passwordConfirmation:Yup.string().when('oldPassword', {
+          is: val => !!val.length,
+          then: Yup.string().required("Campo obrigatório")
+        })
+        .oneOf([Yup.ref('password'), undefined], ('Senhas não batem'))
+
       })
-      await Schema.validate(data, {
+
+      await schema.validate(data, {
         abortEarly: false
       })
 
-      
-      await api.post('users', {
-        username: data.name,
-        email: data.email,
-        password: data.password
-      })
+      const formData = Object.assign({
+        email : data.email,
+        username: data.name
+        }, 
+        data.oldPassword ? {
+        oldPassword: data.oldPassword,
+        password: data.password,
+        passwordConfirmation: data.passwordConfirmation
+      } : {})
 
-      Alert.alert('Cadastro feito com sucesso!', 'Você já pode fazer logon na aplicação.')
+ 
+      const response = await api.put('profiles', formData)
+      updateUser(response.data)
+
+      Alert.alert('Perfil atualizado com sucesso!')
 
       navigation.goBack()
-
-      
 
     }catch(err){
       if(err instanceof Yup.ValidationError){
         const erros = ValidationErrors(err)
         formRef.current?.setErrors(erros)
-        Alert.alert('Erro no cadastro', 'Verifique as informações digitadas')
+        Alert.alert('Erro na atualização de perfil', 'Ocorreu um erro ao atualizar seu perfil tente novamente')
       }
       else{
         console.log(err)
       }
     }
-  }, [])
+  }, [updateUser])
 
+  const handleGoBack = useCallback(()=>{
+    navigation.goBack()
+  }, [navigation])
+
+  const handleUpdateAvatar = useCallback(()=>{
+    ImagePicker.showImagePicker({
+      title: 'Selecione um avatar',
+      cancelButtonTitle: 'cancelar',
+      takePhotoButtonTitle: 'Usar câmera',
+      chooseFromLibraryButtonTitle: 'Escolher da galeria'
+    }, response =>{
+      if (response.didCancel) {
+        return
+      }
+
+      if (response.error) {
+        Alert.alert("Erro ao atualizar avatar")
+        return
+      }
+
+      const source = { uri: response.uri };    
+
+      const data = new FormData()
+      data.append('avatar', {
+        uri: source,
+        type: 'image/jpeg',
+        name: `${user.id}.jpg`
+      })
+      
+      api.patch('/users/avatar', data) 
+      .then(apiResponse => {
+        updateUser(apiResponse.data)
+      })
+
+      }
+    )
+  }, [updateUser, user.id])
+  
   return(
     <>
     <ScrollView
@@ -72,8 +131,12 @@ const Profile : React.FC = () => {
         <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{flex: 1}} enabled>     
           <Container>
+            <BackButton onPress={handleGoBack}>
+              <Icon name='chevron-left' size={24} color='#999591'/>
+
+            </BackButton>
             
-            <UserAvatarButton>
+            <UserAvatarButton onPress={handleUpdateAvatar}>
               <UserAvatar source={{uri: user.avatarUrl}}/>
             </UserAvatarButton>
 
@@ -81,7 +144,7 @@ const Profile : React.FC = () => {
               <Title>Meu Perfil</Title>
             </View>
 
-            <Form ref={formRef} onSubmit={HandleSubmit}>
+            <Form ref={formRef} onSubmit={HandleSubmit} initialData={{name: user.username, email: user.email}}>
               <Input 
               name='name' 
               icon='user' 
@@ -107,11 +170,12 @@ const Profile : React.FC = () => {
               ref={oldPasswordInputRef}
               secureTextEntry
               returnKeyType='next'
+              containerStyle={{marginTop: 16}}
               textContentType='newPassword'
               onSubmitEditing={()=> passwordInputRef.current?.focus()}/>
 
             <Input 
-              name='passwordConfirmation'
+              name='password'
               icon='lock' 
               placeholder='Nova senha'
               ref={passwordInputRef}

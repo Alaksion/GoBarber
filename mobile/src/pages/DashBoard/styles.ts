@@ -90,3 +90,16 @@ export const ProviderListTitle = styled.Text`
   color: #f4ede8;
   font-family: "RobotoSlab-Medium"
 `
+
+export const LogoutButton = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
+export const LogoutButtonText = styled.Text`
+  font-size: 16px;
+  color: #f4ede8;
+  font-family: "RobotoSlab-Medium"
+
+`

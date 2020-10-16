@@ -47,6 +47,7 @@ const Profile: React.FC = ()=>{
       })
       await schema.validate(data, {abortEarly: false})
       const {password, passwordConfirmation, oldPassword, name, email} = data
+
       const formData = Object.assign({
         email : data.email,
         username: data.name

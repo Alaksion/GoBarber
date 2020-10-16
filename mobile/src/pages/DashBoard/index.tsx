@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react'
-import {Container, Header, HeaderTitle, UserName, ProfileButton, UserAvatar, ProvidersList, ProviderListTitle,  ProviderAvatar, ProviderContainer, ProviderMeta, ProviderMetaText, ProviderName, ProviderInfo} from './styles'
+import {Container, LogoutButton, LogoutButtonText, Header, HeaderTitle, UserName, ProfileButton, UserAvatar, ProvidersList, ProviderListTitle,  ProviderAvatar, ProviderContainer, ProviderMeta, ProviderMetaText, ProviderName, ProviderInfo} from './styles'
 import {useAuth} from '../../hooks/AuthContext'
 import { useNavigation } from '@react-navigation/native'
 import api from '../../services/Api'
@@ -34,6 +34,10 @@ const DashBoard: React.FC = () =>{
 
   }, [])
 
+  const handleLogout = useCallback(()=> {
+    signOut()
+  }, [])
+
   return(
     <Container>
       <Header>
@@ -41,6 +45,11 @@ const DashBoard: React.FC = () =>{
           Bem vindo, {"\n"}
           <UserName>{user.username}</UserName>
         </HeaderTitle>
+
+        <LogoutButton onPress={handleLogout}>
+          <Icon name='chevron-left' color='#999591' size={24}/>
+          <LogoutButtonText>Sair</LogoutButtonText>
+        </LogoutButton>
 
         <ProfileButton onPress={navigateToProfile}>
           <UserAvatar source={{uri: user.avatarUrl}}></UserAvatar>
